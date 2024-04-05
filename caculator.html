@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Math Calculator with Themes</title>
+  <style>
+    :root {
+      --calculator-bg-color: #f4f4f4;
+      --button-bg-color: #e0e0e0;
+      --button-hover-color: #d0d0d0;
+      --button-shadow-color: #c0c0c0;
+      --display-border-color: #c0c0c0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--calculator-bg-color);
+    }
+
+    .calculator {
+      text-align: center;
+    }
+
+    input[type="button"] {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      margin: 5px;
+      transition: all 0.2s;
+      background-color: var(--button-bg-color);
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 3px var(--button-shadow-color);
+    }
+
+    input[type="button"]:hover {
+      transform: translateY(2px);
+      box-shadow: 0 1px var(--button-shadow-color);
+      background-color: var(--button-hover-color);
+      cursor: pointer;
+    }
+
+    input[type="button"]:active {
+      transform: translateY(4px);
+      box-shadow: none;
+    }
+
+    input[type="text"] {
+      width: 210px;
+      height: 50px;
+      font-size: 20px;
+      text-align: right;
+      margin: 5px;
+      border: 1px solid var(--display-border-color);
+      border-radius: 5px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <br>
+    <input type="button" value="1" onclick="addToDisplay('1')">
+    <input type="button" value="2" onclick="addToDisplay('2')">
+    <input type="button" value="3" onclick="addToDisplay('3')">
+    <input type="button" value="+" onclick="addToDisplay('+')">
+    <br>
+    <input type="button" value="4" onclick="addToDisplay('4')">
+    <input type="button" value="5" onclick="addToDisplay('5')">
+    <input type="button" value="6" onclick="addToDisplay('6')">
+    <input type="button" value="-" onclick="addToDisplay('-')">
+    <br>
+    <input type="button" value="7" onclick="addToDisplay('7')">
+    <input type="button" value="8" onclick="addToDisplay('8')">
+    <input type="button" value="9" onclick="addToDisplay('9')">
+    <input type="button" value="*" onclick="addToDisplay('*')">
+    <br>
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input type="button" value="0" onclick="addToDisplay('0')">
+    <input type="button" value="=" onclick="calculate()">
+    <input type="button" value="/" onclick="addToDisplay('/')">
+  </div>
+
+  <div class="theme-buttons">
+    <button onclick="setTheme('theme1')">Theme 1</button>
+    <button onclick="setTheme('theme2')">Theme 2</button>
+  </div>
+
+  <script>
+    function addToDisplay(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+      } catch (error) {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+
+    function setTheme(theme) {
+      if (theme === 'theme1') {
+        document.documentElement.style.setProperty('--calculator-bg-color', '#f4f4f4');
+        document.documentElement.style.setProperty('--button-bg-color', '#e0e0e0');
+        document.documentElement.style.setProperty('--button-hover-color', '#d0d0d0');
+        document.documentElement.style.setProperty('--button-shadow-color', '#c0c0c0');
+        document.documentElement.style.setProperty('--display-border-color', '#c0c0c0');
+      } else if (theme === 'theme2') {
+        document.documentElement.style.setProperty('--calculator-bg-color', '#252525');
+        document.documentElement.style.setProperty('--button-bg-color', '#454545');
+        document.documentElement.style.setProperty('--button-hover-color', '#656565');
+        document.documentElement.style.setProperty('--button-shadow-color', '#858585');
+        document.documentElement.style.setProperty('--display-border-color', '#a0a0a0');
+      }
+    }
+  </script>
+</body>
+</html>
