@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator with Dark Mode</title>
+  <style>
+    :root {
+      --transition-duration: 0.3s;
+      --dark-mode-bg: #1e1e1e;
+      --dark-mode-text: #f2f2f2;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--calculator-bg-color);
+      transition: background-color var(--transition-duration);
+    }
+
+    .calculator {
+      text-align: center;
+      transition: transform var(--transition-duration);
+    }
+
+    input[type="button"] {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      margin: 5px;
+      transition: all var(--transition-duration);
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 3px var(--button-shadow-color);
+    }
+
+    input[type="button"]:hover {
+      transform: translateY(2px);
+      box-shadow: 0 1px var(--button-shadow-color);
+      cursor: pointer;
+    }
+
+    input[type="button"]:active {
+      transform: translateY(4px);
+      box-shadow: none;
+    }
+
+    input[type="text"] {
+      width: 210px;
+      height: 50px;
+      font-size: 20px;
+      text-align: right;
+      margin: 5px;
+      border: 1px solid var(--display-border-color);
+      border-radius: 5px;
+      outline: none;
+      transition: border-color var(--transition-duration);
+    }
+
+    .theme-buttons {
+      margin-top: 20px;
+      transition: transform var(--transition-duration);
+    }
+
+    .theme-buttons button {
+      padding: 10px;
+      margin: 0 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all var(--transition-duration);
+    }
+
+    .theme-buttons button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <br>
+    <input type="button" value="1" onclick="addToDisplay('1')">
+    <input type="button" value="2" onclick="addToDisplay('2')">
+    <input type="button" value="3" onclick="addToDisplay('3')">
+    <input type="button" value="+" onclick="addToDisplay('+')">
+    <br>
+    <input type="button" value="4" onclick="addToDisplay('4')">
+    <input type="button" value="5" onclick="addToDisplay('5')">
+    <input type="button" value="6" onclick="addToDisplay('6')">
+    <input type="button" value="-" onclick="addToDisplay('-')">
+    <br>
+    <input type="button" value="7" onclick="addToDisplay('7')">
+    <input type="button" value="8" onclick="addToDisplay('8')">
+    <input type="button" value="9" onclick="addToDisplay('9')">
+    <input type="button" value="*" onclick="addToDisplay('*')">
+    <br>
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input type="button" value="0" onclick="addToDisplay('0')">
+    <input type="button" value="=" onclick="calculate()">
+    <input type="button" value="/" onclick="addToDisplay('/')">
+  </div>
+
+  <div class="theme-buttons">
+    <button onclick="setTheme('light')">Light Mode</button>
+    <button onclick="setTheme('dark')">Dark Mode</button>
+  </div>
+
+  <script>
+    function addToDisplay(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+      } catch (error) {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+
+    function setTheme(theme) {
+      const root = document.documentElement;
+      if (theme === 'light') {
+        root.style.setProperty('--calculator-bg-color', '#f4f4f4');
+        root.style.setProperty('--button-bg-color', '#e0e0e0');
+        root.style.setProperty('--button-text-color', '#000000');
+        root.style.setProperty('--button-shadow-color', '#c0c0c0');
+        root.style.setProperty('--display-border-color', '#c0c0c0');
+      } else if (theme === 'dark') {
+        root.style.setProperty('--calculator-bg-color', '#1e1e1e');
+        root.style.setProperty('--button-bg-color', '#2f2f2f');
+        root.style.setProperty('--button-text-color', '#ffffff');
+        root.style.setProperty('--button-shadow-color', '#0f0f0f');
+        root.style.setProperty('--display-border-color', '#3f3f3f');
+      }
+      const elementsToAnimate = document.querySelectorAll('.calculator, .theme-buttons');
+      elementsToAnimate.forEach(element => {
+        element.style.transition = 'transform var(--transition-duration)';
+        element.style.transform = 'scale(0.9)';
+      });
+      setTimeout(() => {
+        elementsToAnimate.forEach(element => {
+          element.style.transform = 'scale(1)';
+        });
+      }, 300);
+    }
+  </script>
+</body>
+</html>
